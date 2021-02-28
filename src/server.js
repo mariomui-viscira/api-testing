@@ -4,7 +4,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 
 export const app = express()
-
+export const secondApp = express()
 app.disable('x-powered-by')
 
 app.use(cors())
@@ -20,6 +20,7 @@ const logMiddleWare = (req, res, next) => {
   console.log('logging')
   next()
 }
+
 app.use(morgan('dev'))
 
 app.post('/data', (req, res) => {
@@ -27,9 +28,14 @@ app.post('/data', (req, res) => {
 
   res.send({ message: 'wasup' })
 })
-
+secondApp.get('/', (req, res) => {
+  res.send({ message: 'you have sent to secondApp' })
+})
+app.use('/secondApp', secondApp)
 // router route precedence first come first serve
-app.get('/', (req, res) => {
+app.get('/', logMiddleWare, (req, res, next) => {
+  // next()
+  // doing a next here throws to the next controller/middlware
   res.send({ message: 'way' })
 })
 app.get('/', (req, res) => {
