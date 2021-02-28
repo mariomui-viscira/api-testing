@@ -16,7 +16,10 @@ app.use(urlencoded({ extended: false }))
 foo[bar]=baz', that's a qs type so nested json can happen  (rare in the wild)
 /?mario=five&you=two is a querystring  (super common)
 */
-
+const logMiddleWare = (req, res, next) => {
+  console.log('logging')
+  next()
+}
 app.use(morgan('dev'))
 
 app.post('/data', (req, res) => {
