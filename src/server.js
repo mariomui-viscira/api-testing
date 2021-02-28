@@ -9,13 +9,20 @@ app.disable('x-powered-by')
 
 app.use(cors())
 app.use(json())
-app.use(urlencoded({ extended: true }))
+app.use(urlencoded({ extended: false }))
+
+// The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false) or the qs library (when true). The "extended" syntax allows for rich objects and arrays to be encoded into the URL-encoded format, allowing for a JSON-like experience with URL-encoded. For more information, please see the qs library.
+/*  
+foo[bar]=baz', that's a qs type so nested json can happen  (rare in the wild)
+/?mario=five&you=two is a querystring  (super common)
+*/
+
 app.use(morgan('dev'))
 
 app.post('/data', (req, res) => {
   console.log(req.body)
 
-  res.send({ message: 'ok' })
+  res.send({ message: 'wasup' })
 })
 
 // router route precedence first come first serve
