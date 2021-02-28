@@ -12,4 +12,20 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
-export const start = () => {}
+app.post('/data', (req, res) => {
+  console.log(req.body)
+
+  res.send({ message: 'ok' })
+})
+
+// router route precedence first come first serve
+app.get('/', (req, res) => {
+  res.send({ message: 'way' })
+})
+app.get('/', (req, res) => {
+  res.send({ message: 'noway' })
+})
+
+export const start = () => {
+  app.listen(3000)
+}
