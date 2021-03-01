@@ -4,7 +4,7 @@ import morgan from 'morgan'
 import config from './config'
 import cors from 'cors'
 import { connect } from './utils/db'
-
+import router from './resources/item/item.router'
 export const app = express()
 
 app.disable('x-powered-by')
@@ -14,6 +14,8 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
+app.use(router)
+app.use('/api', router)
 export const start = async () => {
   try {
     await connect()
