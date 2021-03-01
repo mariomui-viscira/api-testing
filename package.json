@@ -7,6 +7,7 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "cross-env NODE_ENV=testing jest --forceExit --detectOpenHandles  --silent",
+    "foo-routes": "sh -c 'iarg=$0 && if [[ $iarg -eq \"sh\" ]]; then npm run test -t router; else cross-env DB_PORT=$iarg npm run test -t router; fi'",
     "test-routes": "npm run test -t router",
     "test-models": "npm run test -t model",
     "test-controllers": "npm run test -t controllers",
