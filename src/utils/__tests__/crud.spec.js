@@ -61,185 +61,185 @@ describe('crud controllers', () => {
     })
   })
 
-  describe('getMany', () => {
-    test('finds array of docs by authenticated user', async () => {
-      expect.assertions(4)
+  // describe('getMany', () => {
+  //   test('finds array of docs by authenticated user', async () => {
+  //     expect.assertions(4)
 
-      const user = mongoose.Types.ObjectId()
-      await List.create([
-        { name: 'list', createdBy: user },
-        { name: 'other', createdBy: user },
-        { name: 'list', createdBy: mongoose.Types.ObjectId() }
-      ])
+  //     const user = mongoose.Types.ObjectId()
+  //     await List.create([
+  //       { name: 'list', createdBy: user },
+  //       { name: 'other', createdBy: user },
+  //       { name: 'list', createdBy: mongoose.Types.ObjectId() }
+  //     ])
 
-      const req = {
-        user: {
-          _id: user
-        }
-      }
+  //     const req = {
+  //       user: {
+  //         _id: user
+  //       }
+  //     }
 
-      const res = {
-        status(status) {
-          expect(status).toBe(200)
-          return this
-        },
-        json(result) {
-          expect(result.data).toHaveLength(2)
-          result.data.forEach(doc => expect(`${doc.createdBy}`).toBe(`${user}`))
-        }
-      }
+  //     const res = {
+  //       status(status) {
+  //         expect(status).toBe(200)
+  //         return this
+  //       },
+  //       json(result) {
+  //         expect(result.data).toHaveLength(2)
+  //         result.data.forEach(doc => expect(`${doc.createdBy}`).toBe(`${user}`))
+  //       }
+  //     }
 
-      await getMany(List)(req, res)
-    })
-  })
+  //     await getMany(List)(req, res)
+  //   })
+  // })
 
-  describe('createOne', () => {
-    test('creates a new doc', async () => {
-      expect.assertions(2)
-      const user = mongoose.Types.ObjectId()
-      const body = { name: 'name' }
+  // describe('createOne', () => {
+  //   test('creates a new doc', async () => {
+  //     expect.assertions(2)
+  //     const user = mongoose.Types.ObjectId()
+  //     const body = { name: 'name' }
 
-      const req = {
-        user: { _id: user },
-        body
-      }
+  //     const req = {
+  //       user: { _id: user },
+  //       body
+  //     }
 
-      const res = {
-        status(status) {
-          expect(status).toBe(201)
-          return this
-        },
-        json(results) {
-          expect(results.data.name).toBe(body.name)
-        }
-      }
+  //     const res = {
+  //       status(status) {
+  //         expect(status).toBe(201)
+  //         return this
+  //       },
+  //       json(results) {
+  //         expect(results.data.name).toBe(body.name)
+  //       }
+  //     }
 
-      await createOne(List)(req, res)
-    })
+  //     await createOne(List)(req, res)
+  //   })
 
-    test('createdBy should be the authenticated user', async () => {
-      expect.assertions(2)
-      const user = mongoose.Types.ObjectId()
-      const body = { name: 'name' }
+  //   test('createdBy should be the authenticated user', async () => {
+  //     expect.assertions(2)
+  //     const user = mongoose.Types.ObjectId()
+  //     const body = { name: 'name' }
 
-      const req = {
-        user: { _id: user },
-        body
-      }
+  //     const req = {
+  //       user: { _id: user },
+  //       body
+  //     }
 
-      const res = {
-        status(status) {
-          expect(status).toBe(201)
-          return this
-        },
-        json(results) {
-          expect(`${results.data.createdBy}`).toBe(`${user}`)
-        }
-      }
+  //     const res = {
+  //       status(status) {
+  //         expect(status).toBe(201)
+  //         return this
+  //       },
+  //       json(results) {
+  //         expect(`${results.data.createdBy}`).toBe(`${user}`)
+  //       }
+  //     }
 
-      await createOne(List)(req, res)
-    })
-  })
+  //     await createOne(List)(req, res)
+  //   })
+  // })
 
-  describe('updateOne', () => {
-    test('finds doc by authenticated user and id to update', async () => {
-      expect.assertions(3)
+  // describe('updateOne', () => {
+  //   test('finds doc by authenticated user and id to update', async () => {
+  //     expect.assertions(3)
 
-      const user = mongoose.Types.ObjectId()
-      const list = await List.create({ name: 'name', createdBy: user })
-      const update = { name: 'hello' }
+  //     const user = mongoose.Types.ObjectId()
+  //     const list = await List.create({ name: 'name', createdBy: user })
+  //     const update = { name: 'hello' }
 
-      const req = {
-        params: { id: list._id },
-        user: { _id: user },
-        body: update
-      }
+  //     const req = {
+  //       params: { id: list._id },
+  //       user: { _id: user },
+  //       body: update
+  //     }
 
-      const res = {
-        status(status) {
-          expect(status).toBe(200)
-          return this
-        },
-        json(results) {
-          expect(`${results.data._id}`).toBe(`${list._id}`)
-          expect(results.data.name).toBe(update.name)
-        }
-      }
+  //     const res = {
+  //       status(status) {
+  //         expect(status).toBe(200)
+  //         return this
+  //       },
+  //       json(results) {
+  //         expect(`${results.data._id}`).toBe(`${list._id}`)
+  //         expect(results.data.name).toBe(update.name)
+  //       }
+  //     }
 
-      await updateOne(List)(req, res)
-    })
+  //     await updateOne(List)(req, res)
+  //   })
 
-    test('400 if no doc', async () => {
-      expect.assertions(2)
+  //   test('400 if no doc', async () => {
+  //     expect.assertions(2)
 
-      const user = mongoose.Types.ObjectId()
-      const update = { name: 'hello' }
+  //     const user = mongoose.Types.ObjectId()
+  //     const update = { name: 'hello' }
 
-      const req = {
-        params: { id: mongoose.Types.ObjectId() },
-        user: { _id: user },
-        body: update
-      }
+  //     const req = {
+  //       params: { id: mongoose.Types.ObjectId() },
+  //       user: { _id: user },
+  //       body: update
+  //     }
 
-      const res = {
-        status(status) {
-          expect(status).toBe(400)
-          return this
-        },
-        end() {
-          expect(true).toBe(true)
-        }
-      }
+  //     const res = {
+  //       status(status) {
+  //         expect(status).toBe(400)
+  //         return this
+  //       },
+  //       end() {
+  //         expect(true).toBe(true)
+  //       }
+  //     }
 
-      await updateOne(List)(req, res)
-    })
-  })
+  //     await updateOne(List)(req, res)
+  //   })
+  // })
 
-  describe('removeOne', () => {
-    test('first doc by authenticated user and id to remove', async () => {
-      expect.assertions(2)
+  // describe('removeOne', () => {
+  //   test('first doc by authenticated user and id to remove', async () => {
+  //     expect.assertions(2)
 
-      const user = mongoose.Types.ObjectId()
-      const list = await List.create({ name: 'name', createdBy: user })
+  //     const user = mongoose.Types.ObjectId()
+  //     const list = await List.create({ name: 'name', createdBy: user })
 
-      const req = {
-        params: { id: list._id },
-        user: { _id: user }
-      }
+  //     const req = {
+  //       params: { id: list._id },
+  //       user: { _id: user }
+  //     }
 
-      const res = {
-        status(status) {
-          expect(status).toBe(200)
-          return this
-        },
-        json(results) {
-          expect(`${results.data._id}`).toBe(`${list._id}`)
-        }
-      }
+  //     const res = {
+  //       status(status) {
+  //         expect(status).toBe(200)
+  //         return this
+  //       },
+  //       json(results) {
+  //         expect(`${results.data._id}`).toBe(`${list._id}`)
+  //       }
+  //     }
 
-      await removeOne(List)(req, res)
-    })
+  //     await removeOne(List)(req, res)
+  //   })
 
-    test('400 if no doc', async () => {
-      expect.assertions(2)
-      const user = mongoose.Types.ObjectId()
+  //   test('400 if no doc', async () => {
+  //     expect.assertions(2)
+  //     const user = mongoose.Types.ObjectId()
 
-      const req = {
-        params: { id: mongoose.Types.ObjectId() },
-        user: { _id: user }
-      }
+  //     const req = {
+  //       params: { id: mongoose.Types.ObjectId() },
+  //       user: { _id: user }
+  //     }
 
-      const res = {
-        status(status) {
-          expect(status).toBe(400)
-          return this
-        },
-        end() {
-          expect(true).toBe(true)
-        }
-      }
+  //     const res = {
+  //       status(status) {
+  //         expect(status).toBe(400)
+  //         return this
+  //       },
+  //       end() {
+  //         expect(true).toBe(true)
+  //       }
+  //     }
 
-      await removeOne(List)(req, res)
-    })
-  })
+  //     await removeOne(List)(req, res)
+  //   })
+  // })
 })

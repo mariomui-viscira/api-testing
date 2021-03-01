@@ -1,4 +1,17 @@
-export const getOne = model => async (req, res) => {}
+import mongoose from 'mongoose'
+export const getOne = model => async (req, res) => {
+  const id = req.params.id
+  const userId = req.user._id
+  const isValidId = mongoose.Types.ObjectId.isValid(id)
+  if (isValidId) {
+    const doc = await model.findOne({ _id: id, createdBy: userId }).exec()
+    if (!doc) {
+      return res.status(400).end()
+    } else {
+      return res.status(200).json({ data: doc })
+    }
+  }
+}
 
 export const getMany = model => async (req, res) => {}
 
