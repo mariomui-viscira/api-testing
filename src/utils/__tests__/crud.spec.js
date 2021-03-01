@@ -61,37 +61,37 @@ describe('crud controllers', () => {
     })
   })
 
-  // describe('getMany', () => {
-  //   test('finds array of docs by authenticated user', async () => {
-  //     expect.assertions(4)
+  describe('getMany', () => {
+    test('finds array of docs by authenticated user', async () => {
+      expect.assertions(4)
 
-  //     const user = mongoose.Types.ObjectId()
-  //     await List.create([
-  //       { name: 'list', createdBy: user },
-  //       { name: 'other', createdBy: user },
-  //       { name: 'list', createdBy: mongoose.Types.ObjectId() }
-  //     ])
+      const user = mongoose.Types.ObjectId()
+      await List.create([
+        { name: 'list', createdBy: user },
+        { name: 'other', createdBy: user },
+        { name: 'list', createdBy: mongoose.Types.ObjectId() }
+      ])
 
-  //     const req = {
-  //       user: {
-  //         _id: user
-  //       }
-  //     }
+      const req = {
+        user: {
+          _id: user
+        }
+      }
 
-  //     const res = {
-  //       status(status) {
-  //         expect(status).toBe(200)
-  //         return this
-  //       },
-  //       json(result) {
-  //         expect(result.data).toHaveLength(2)
-  //         result.data.forEach(doc => expect(`${doc.createdBy}`).toBe(`${user}`))
-  //       }
-  //     }
+      const res = {
+        status(status) {
+          expect(status).toBe(200)
+          return this
+        },
+        json(result) {
+          expect(result.data).toHaveLength(2)
+          result.data.forEach(doc => expect(`${doc.createdBy}`).toBe(`${user}`))
+        }
+      }
 
-  //     await getMany(List)(req, res)
-  //   })
-  // })
+      await getMany(List)(req, res)
+    })
+  })
 
   // describe('createOne', () => {
   //   test('creates a new doc', async () => {

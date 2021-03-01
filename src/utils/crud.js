@@ -13,7 +13,14 @@ export const getOne = model => async (req, res) => {
   }
 }
 
-export const getMany = model => async (req, res) => {}
+export const getMany = model => async (req, res) => {
+  const userId = req.user._id
+  const doc = await model.find({ createdBy: userId }).exec()
+  if (doc) {
+    console.log('🚀 ~ file: crud.js ~ line 20 ~ getMany ~ doc', doc)
+    return res.status(200).json({ data: doc })
+  }
+}
 
 export const createOne = model => async (req, res) => {}
 
