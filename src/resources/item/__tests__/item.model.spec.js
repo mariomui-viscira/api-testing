@@ -50,5 +50,9 @@ describe('Item model', () => {
         required: true
       })
     })
+    test('list and name is a compound index and unique', () => {
+      const item = Item.schema
+      console.log('🚀 ~ file: item.model.spec.js ~ line 55 ~ test ~ item', item)
+    })
   })
 })
