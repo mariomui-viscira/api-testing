@@ -11,10 +11,25 @@ describe('item router', () => {
     ]
 
     routes.forEach(route => {
-      const match = router.stack.find(
-        s => s.route.path === route.path && s.route.methods[route.method]
-      )
-      expect(match).toBeTruthy()
+      let pathMatched
+      let methodsMatched
+      const match = router.stack.find(s => {
+        const match =
+          s.route.path === route.path && s.route.methods[route.method]
+        if (!!match === false) {
+          pathMatched = {
+            didPathsMatch: s.route.path === route.path,
+            path: s.route.path
+          }
+          methodsMatched = { didMethodsMach: !!s.route.methods[route.method] }
+        }
+        return match
+      })
+      // expect(match).toBeTruthy()
+      if (!!match === false) {
+        console.log(pathMatched, methodsMatched)
+      }
+      expect(!!match).toBe(true)
     })
   })
 })
