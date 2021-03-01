@@ -32,6 +32,7 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.12.13",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-core": "7.0.0-bridge.0",
@@ -55,6 +56,9 @@
     "prettier": "^1.15.2",
     "rimraf": "^2.6.2",
     "supertest": "^3.3.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "2.1.2"
   },
   "jest": {
     "verbose": true,
