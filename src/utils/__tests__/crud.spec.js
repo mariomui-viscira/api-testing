@@ -93,53 +93,55 @@ describe('crud controllers', () => {
     })
   })
 
-  // describe('createOne', () => {
-  //   test('creates a new doc', async () => {
-  //     expect.assertions(2)
-  //     const user = mongoose.Types.ObjectId()
-  //     const body = { name: 'name' }
+  describe('createOne', () => {
+    test('creates a new doc', async () => {
+      expect.assertions(2)
+      // expect.assertions(number) verifies that a certain number of assertions are called during a test. This is often useful when testing asynchronous code, in order to make sure that assertions in a callback actually got called.
 
-  //     const req = {
-  //       user: { _id: user },
-  //       body
-  //     }
+      const user = mongoose.Types.ObjectId()
+      const body = { name: 'name' }
 
-  //     const res = {
-  //       status(status) {
-  //         expect(status).toBe(201)
-  //         return this
-  //       },
-  //       json(results) {
-  //         expect(results.data.name).toBe(body.name)
-  //       }
-  //     }
+      const req = {
+        user: { _id: user },
+        body
+      }
 
-  //     await createOne(List)(req, res)
-  //   })
+      const res = {
+        status(status) {
+          expect(status).toBe(201)
+          return this
+        },
+        json(results) {
+          expect(results.data.name).toBe(body.name)
+        }
+      }
 
-  //   test('createdBy should be the authenticated user', async () => {
-  //     expect.assertions(2)
-  //     const user = mongoose.Types.ObjectId()
-  //     const body = { name: 'name' }
+      await createOne(List)(req, res)
+    })
 
-  //     const req = {
-  //       user: { _id: user },
-  //       body
-  //     }
+    test('createdBy should be the authenticated user', async () => {
+      expect.assertions(2)
+      const user = mongoose.Types.ObjectId()
+      const body = { name: 'name' }
 
-  //     const res = {
-  //       status(status) {
-  //         expect(status).toBe(201)
-  //         return this
-  //       },
-  //       json(results) {
-  //         expect(`${results.data.createdBy}`).toBe(`${user}`)
-  //       }
-  //     }
+      const req = {
+        user: { _id: user },
+        body
+      }
 
-  //     await createOne(List)(req, res)
-  //   })
-  // })
+      const res = {
+        status(status) {
+          expect(status).toBe(201)
+          return this
+        },
+        json(results) {
+          expect(`${results.data.createdBy}`).toBe(`${user}`)
+        }
+      }
+
+      await createOne(List)(req, res)
+    })
+  })
 
   // describe('updateOne', () => {
   //   test('finds doc by authenticated user and id to update', async () => {
